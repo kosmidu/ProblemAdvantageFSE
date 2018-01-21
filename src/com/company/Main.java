@@ -4,38 +4,12 @@ import java.util.*;
 
 public class Main
 {
-    private static void findMaxNumber(ArrayList<Integer> integerList)
+    private static ArrayList<Integer> insert()
     {
-        // Sort integerList with my implementation of Comparator<Integer>.
-        integerList.sort(new myComparator());
-
-        // Display the values of sorted integerList.
-        System.out.print("---> ");
-        for (Integer value : integerList)
-            System.out.print(value + " ");
-
-        // Convert to string
-        StringBuilder sb = new StringBuilder();
-        ListIterator<Integer> i = integerList.listIterator();
-        while(i.hasNext())
-        {
-            sb.append(Integer.toString(i.next()));
-        }
-
-        String string = sb.toString();
-        System.out.println("\n" + string);
-    }
-
-    public static void main(String[] args)
-    {
-        System.out.println("Please, insert only non negative integers, separated by spaces." +
-                "\nThen press enter.");
-
         ArrayList<Integer> inputList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String[] tokens = scanner.nextLine().split("\\s");
 
-        // Insert the integers to inputList.
         for (String token : tokens)
         {
             try {
@@ -45,12 +19,51 @@ public class Main
                 System.exit(-1);
             }
         }
+        return inputList;
+    }
 
-        // Display the values of inputList.
-        for (Integer value : inputList)
+    private static void display(ArrayList<Integer> list)
+    {
+        for (Integer value : list)
             System.out.print(value + " ");
+    }
 
-        // Call the method 'findMaxNumber()'.
+    private static void convertIntListToString(ArrayList<Integer> intList)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (Integer element : intList)
+            sb.append(Integer.toString(element));
+
+        String string = sb.toString();
+        System.out.println("\n" + string);
+    }
+
+    private static void findMaxNumber(ArrayList<Integer> integerList)
+    {
+        // Sort integerList with my implementation of Comparator<Integer>.
+        integerList.sort(new myComparator());
+
+        // Display the values of sorted integerList.
+        System.out.print("---> ");
+        display(integerList);
+
+        // Convert the list to string and print it.
+        convertIntListToString(integerList);
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println("Please, insert only non negative integers, separated by spaces." +
+                "\nThen press enter.");
+
+        // Get the input from console. Insert the integers to inputList.
+        ArrayList<Integer> inputList = insert();
+
+        // Display the values of the list.
+        display(inputList);
+
+        // Find the maximum possible combined number.
         findMaxNumber(inputList);
     }
 }
