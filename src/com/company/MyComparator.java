@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Comparator;
 
-public class myComparator implements Comparator<Integer>
+public class MyComparator implements Comparator<Integer>
 {
     public int compare(Integer a, Integer b)
     {

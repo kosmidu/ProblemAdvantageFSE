@@ -22,34 +22,33 @@ public class Main
         return inputList;
     }
 
-    private static void display(ArrayList<Integer> list)
+    /*private static void display(ArrayList<Integer> list)
     {
         for (Integer value : list)
             System.out.print(value + " ");
-    }
+    }*/
 
-    private static void convertIntListToString(ArrayList<Integer> intList)
+    private static String convertIntListToString(ArrayList<Integer> intList)
     {
         StringBuilder sb = new StringBuilder();
 
         for (Integer element : intList)
             sb.append(Integer.toString(element));
 
-        String string = sb.toString();
-        System.out.println("\n" + string);
+        return sb.toString();
     }
 
-    private static void findMaxNumber(ArrayList<Integer> integerList)
+    public static String findMaxNumber(ArrayList<Integer> integerList)
     {
         // Sort integerList with my implementation of Comparator<Integer>.
-        integerList.sort(new myComparator());
+        integerList.sort(new MyComparator());
 
         // Display the values of sorted integerList.
-        System.out.print("---> ");
-        display(integerList);
+        //System.out.print("---> ");
+        //display(integerList);
 
-        // Convert the list to string and print it.
-        convertIntListToString(integerList);
+        // Convert the list to string.
+        return convertIntListToString(integerList);
     }
 
     public static void main(String[] args)
@@ -61,9 +60,14 @@ public class Main
         ArrayList<Integer> inputList = insert();
 
         // Display the values of the list.
-        display(inputList);
+        //display(inputList);
 
         // Find the maximum possible combined number.
-        findMaxNumber(inputList);
+        long startTime = System.currentTimeMillis();
+        String result = findMaxNumber(inputList);
+        long estimatedTime = System.currentTimeMillis() - startTime;
+
+        System.out.println(result);
+        System.out.println(estimatedTime + " milliseconds");
     }
 }
