@@ -1,20 +1,18 @@
 package com.company;
 
 import javafx.util.Pair;
-
 import java.util.*;
-
-import static java.lang.Math.abs;
 
 /**
  * <h1>Problem - Advantage FSE Academy</h1>
+ * <u>This is an alternate approach of the ProblemAdvantageFSE program.</u>
  * The ProblemAdvantageFSE program implements an application that
  * given an ArrayList of non negative integers, finds their largest
  * possible combined number and prints the output as a string on the screen.
  * <p>
  * @author Kosmidou Maria
- * @version 1.0
- * @since 2018-01-19
+ * @version 2.0
+ * @since 2018-01-23
  */
 public class ProblemAdvantageFSE
 {
@@ -51,9 +49,10 @@ public class ProblemAdvantageFSE
     }*/
 
     /**
-     * This method is used to get an ArrayList with integers and convert it to a string.
-     * @param intList ArrayList A list with non negative integers.
-     * @return String This returns a string with the same content of the above list.
+     * This method is used to get a List with pairs of (key: Long, value: Integer)
+     * and only the value-list convert it to a string.
+     * @param intList List A list with pairs of key and values, from the package javafx.util.Pair.
+     * @return String This returns a string with the same content of the above value-list.
      */
     private static String convertIntListToString(List<Pair<Long,Integer>> intList)
     {
@@ -68,8 +67,15 @@ public class ProblemAdvantageFSE
     /**
      * This method is used to implement the basic function of this project.
      * It gets an ArrayList with non negative integers and finds their largest possible combined number.
-     * The main idea is to sort the ArrayList according to user defined criteria.
-     * First, it makes use of the sort() method, implemented by the MyComparator class.
+     * The main idea is
+     * <ul>
+     *     <li>find the maximum digits of the largest integer of the list (maxDigits)</li>
+     *     <li>pad the integers to the same size by repeating the digits (size = maxDigits + 1)</li>
+     *     <li>make a list of pairs(key: padded integers, value: original integers)</li>
+     *     <li>sort using these padded integers as a sort key.</li>
+     *     <li>the sorted value-list is the largest number </li>
+     * </ul>
+     * It makes use of the sort() method, implemented by the MyComparator class.
      * Then the convertIntListToString() method is called, so as to convert the sorted list to a string
      * @param integerList ArrayList A list with non negative integers.
      * @return String This returns a string,  which represents the maximum possible combined number, as a string.
@@ -78,42 +84,31 @@ public class ProblemAdvantageFSE
     public static String findMaxNumber(ArrayList<Integer> integerList)
     {
         int maxDigits = String.valueOf(Collections.max(integerList)).length();
-        System.out.println(maxDigits);
 
-        //ArrayList<Long> en = new ArrayList<>();
-        List<Pair<Long, Integer>> en = new ArrayList<>();
+        List<Pair<Long, Integer>> l_pair = new ArrayList<>();
 
-        for (Integer element : integerList) {
-            String inp = String.valueOf(element);
-            StringBuilder res = new StringBuilder(String.valueOf(element));
+        for (Integer element : integerList)
+        {
+            String init_temp = String.valueOf(element);
+            StringBuilder temp = new StringBuilder(init_temp);
             int size = String.valueOf(element).length();
             int n = maxDigits - size;
 
             for(int i = 0, j = 0; i <= n; ++i)
             {
-                res.append(inp.charAt(j));
+                temp.append(init_temp.charAt(j));
                 if (j >= (size - 1))
                     j = 0;
                 else
                     ++j;
             }
-            Pair<Long, Integer> p = new Pair<>(Long.valueOf(res.toString()), element);
-            en.add(p);
+            Pair<Long, Integer> p = new Pair<>(Long.valueOf(temp.toString()), element);
+            l_pair.add(p);
         }
 
-        for (Pair value : en)
-            System.out.println(value.getKey() + " "+ value.getValue());
+        l_pair.sort(new MyComparator());
 
-        Collections.sort(en, new Comparator<Pair<Long, Integer>>()
-        {
-            @Override
-            public int compare(final Pair<Long, Integer> o1, final Pair<Long, Integer> o2)
-            {
-                return Integer.compare(Integer.valueOf(o2.getKey().intValue()), Integer.valueOf(o1.getKey().intValue()));
-            }
-        });
-
-        return convertIntListToString(en);
+        return convertIntListToString(l_pair);
     }
 
     /**

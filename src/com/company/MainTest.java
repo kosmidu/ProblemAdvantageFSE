@@ -5,12 +5,13 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * This Class implements some useful Unit tests, for easier control of the main ProblemAdvantageFSE program.
+ * This Class implements some useful Unit tests, for easier control of the alternate approach
+ * of the main ProblemAdvantageFSE program.
  * It uses JUnit4 testing library.
  * <p>
  * @author Kosmidou Maria
- * @version 1.0
- * @since 2018-01-22
+ * @version 2.0
+ * @since 2018-01-23
  */
 public class MainTest
 {
