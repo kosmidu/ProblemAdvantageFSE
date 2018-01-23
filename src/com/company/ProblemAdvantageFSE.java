@@ -1,6 +1,10 @@
 package com.company;
 
+import javafx.util.Pair;
+
 import java.util.*;
+
+import static java.lang.Math.abs;
 
 /**
  * <h1>Problem - Advantage FSE Academy</h1>
@@ -51,12 +55,12 @@ public class ProblemAdvantageFSE
      * @param intList ArrayList A list with non negative integers.
      * @return String This returns a string with the same content of the above list.
      */
-    private static String convertIntListToString(ArrayList<Integer> intList)
+    private static String convertIntListToString(List<Pair<Long,Integer>> intList)
     {
         StringBuilder sb = new StringBuilder();
 
-        for (Integer element : intList)
-            sb.append(Integer.toString(element));
+        for (Pair element : intList)
+            sb.append(Integer.valueOf(element.getValue().toString()));
 
         return sb.toString();
     }
@@ -73,15 +77,43 @@ public class ProblemAdvantageFSE
      */
     public static String findMaxNumber(ArrayList<Integer> integerList)
     {
-        // Sort integerList with my implementation of MyComparator class.
-        integerList.sort(new MyComparator());
+        int maxDigits = String.valueOf(Collections.max(integerList)).length();
+        System.out.println(maxDigits);
 
-        /* //Display the values of sorted integerList.
-        System.out.print("---> ");
-        display(integerList);
-        */
+        //ArrayList<Long> en = new ArrayList<>();
+        List<Pair<Long, Integer>> en = new ArrayList<>();
 
-        return convertIntListToString(integerList);
+        for (Integer element : integerList) {
+            String inp = String.valueOf(element);
+            StringBuilder res = new StringBuilder(String.valueOf(element));
+            int size = String.valueOf(element).length();
+            int n = maxDigits - size;
+
+            for(int i = 0, j = 0; i <= n; ++i)
+            {
+                res.append(inp.charAt(j));
+                if (j >= (size - 1))
+                    j = 0;
+                else
+                    ++j;
+            }
+            Pair<Long, Integer> p = new Pair<>(Long.valueOf(res.toString()), element);
+            en.add(p);
+        }
+
+        for (Pair value : en)
+            System.out.println(value.getKey() + " "+ value.getValue());
+
+        Collections.sort(en, new Comparator<Pair<Long, Integer>>()
+        {
+            @Override
+            public int compare(final Pair<Long, Integer> o1, final Pair<Long, Integer> o2)
+            {
+                return Integer.compare(Integer.valueOf(o2.getKey().intValue()), Integer.valueOf(o1.getKey().intValue()));
+            }
+        });
+
+        return convertIntListToString(en);
     }
 
     /**
