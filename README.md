@@ -31,7 +31,8 @@ The steps of this approach are:
 
 ### Description of how to compile and run the program
 -	Clone the repository git@github.com:kosmidu/ProblemAdvantageFSE.git to your file.
--	Go to the file and compile the main program and the unit test.
+-	Go to this file and put there the two .jar files (hamcrest-core-1.3.jar, junit-4.12.jar).
+-   Compile the main program and the unit test.
 ```
 javac -d ./src/com/company/ -cp ./hamcrest-core-1.3.jar:./junit-4.12.jar:./src/com/company ./src/com/company/*.java
 ```
